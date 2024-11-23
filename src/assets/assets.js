@@ -4,7 +4,7 @@ import profile from "./profile.png";
 import cart from "./cart.png";
 import menuIcon from "./menuIcon.png";
 import backIcon from "./backIcon.png";
-import heroImg from "./heroImg.png";
+import heroImg from "./heroImg.jpeg";
 import exchangeIcon from "./exchangeIcon.png";
 import qualityIcon from "./qualityIcon.png";
 import supportIcon from "./supportIcon.png";

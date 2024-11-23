@@ -9,9 +9,9 @@ const Navbar = () => {
 
     const [visible, setVisible] = useState(false);
 
-    const {showSearch, setShowSearch, getCartCount} = useContext(ShopContext);
+    const {showSearch, setShowSearch, getCartCount, navigate, token, setToken, setCartItems} = useContext(ShopContext);
 
-    const location =useLocation()
+    const location = useLocation()
 
     function handleSidebarOpen() {
         setVisible(true);
@@ -25,6 +25,13 @@ const Navbar = () => {
         if(location.pathname.includes("collection")){
             setShowSearch(true)
         }
+    }
+
+    function logout() {
+        localStorage.removeItem('token');
+        setToken('');
+        setCartItems({});
+        navigate('/login');
     }
 
     return (
@@ -56,16 +63,16 @@ const Navbar = () => {
             <img onClick={handleSearch} src={assets.search} className="w-5 cursor-pointer" alt="search" />
 
             <div className="group relative">
-                <Link to='/login'>
-                    <img src={assets.profile} alt="profile" className="w-5 cursor-pointer" />
-                </Link>
-                <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
-                    <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
-                        <p className="cursor-pointer hover:text-black">My Profile</p>
-                        <p className="cursor-pointer hover:text-black">Orders</p>
-                        <p className="cursor-pointer hover:text-red-500 text-red-400">Logout</p>
+                <img onClick={() => token ? null : navigate('/login')} src={assets.profile} alt="profile" className="w-5 cursor-pointer" />
+                {token &&
+                    <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
+                        <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
+                            <p className="cursor-pointer hover:text-black">My Profile</p>
+                            <p className="cursor-pointer hover:text-black" onClick={() => navigate('/orders')}>Orders</p>
+                            <p className="cursor-pointer hover:text-red-500 text-red-400"  onClick={logout} >Logout</p>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
 
             <Link to={"/cart"} className="relative" >
